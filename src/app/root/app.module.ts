@@ -12,8 +12,8 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   imports: [
     BrowserModule,
+    CommonModules.forRoot(),
     SharedModule,
-    CommonModules,
     AppRoutingModule
   ],
   providers: [],

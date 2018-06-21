@@ -1,11 +1,13 @@
 export const API = {
     HOST: "http://external.novility.com:9050",
-    BASE: "/api/"
+    BASE: "//car-rental/api",
+    CARS: "/Cars",
+    RESERVATION: "/Reservations"
 }
 
 export const ROUTES = {
     ROOT: {
-        PATH: "dashboard",
+        PATH: "",
         MODULE: "../views/dashboard/dashboard.module#DashboardModule"
     },
     RESERVATION: {

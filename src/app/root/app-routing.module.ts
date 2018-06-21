@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { CarResolver } from '../shared/provider/car.resolver';
+
 import { ROUTES } from '../shared/constants';
 
 const routes: Routes = [{
-  path: '',
-  redirectTo: '/dashboard',
-  pathMatch: 'full'
-},{
   path: ROUTES.ROOT.PATH,
   /**
   * not able to lazyload component by defining `loadChildren` value `ROUTES`
@@ -16,7 +14,10 @@ const routes: Routes = [{
   loadChildren: "../views/dashboard/dashboard.module#DashboardModule"
 },{
   path: ROUTES.RESERVATION.PATH,
-  loadChildren: "../views/reservation/reservation.module#ReservationModule"
+  loadChildren: "../views/reservation/reservation.module#ReservationModule",
+  resolve: {
+    cars: CarResolver
+  }
 }];
 
 @NgModule({
