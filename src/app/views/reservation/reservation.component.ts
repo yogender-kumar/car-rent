@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
+import {CalendarComponent} from "ap-angular-fullcalendar";
 
 @Component({
   selector: 'app-reservation',
@@ -9,7 +10,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ReservationComponent implements OnInit, OnDestroy {
   
-  private subscription: Subscription;
+  @ViewChild(CalendarComponent) myCalendar: CalendarComponent;
+
   reservations:Array<object>;
   cars: Array<object>;
   
@@ -76,6 +78,44 @@ export class ReservationComponent implements OnInit, OnDestroy {
    */
   private getCarByCarId(id): Object {
     return this.cars.find( car => car['id'] == id);
+  }
+
+
+  /**
+   * 'fullcalendar' code lies below this comment, which require some changes to make it working as expected
+   * Needs to map data which is getting from API to render it on browser
+   */
+
+  calendarOptions:Object = {
+    height: 'parent',
+    fixedWeekCount : false,
+    defaultDate: new Date(),
+    editable: true,
+    eventLimit: true, // allow "more" link when too many events
+    events: [
+      {
+        title: 'All Day Event',
+        start: '2016-09-01'
+      },
+      {
+        title: 'Long Event',
+        start: '2016-09-07',
+        end: '2016-09-10'
+      },
+      {
+        id: 999,
+        title: 'Repeating Event',
+        start: '2016-09-09T16:00:00'
+      }
+    ]
+  };
+
+  onCalendarInit(initialized: boolean) {
+    console.log('Calendar initialized');
+  }
+
+  changeCalendarView(view) {
+    this.myCalendar.fullCalendar('changeView', view);
   }
   
 }

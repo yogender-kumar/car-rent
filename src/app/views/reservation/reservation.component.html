@@ -9,7 +9,14 @@
         <div class="col-4">
           <h3 class="h5">Cars</h3>
         </div>
-        <div class="col-8"></div>
+        <div class="col-8">
+
+            <angular2-fullcalendar [options]="calendarOptions" (initialized)="onCalendarInit($event)"></angular2-fullcalendar>
+            
+        </div>
+        <div class="col-12 mt-5">
+          {{reservations | json}}
+        </div>
       </div>
     </div>
   </div>

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { AddModifyComponent } from './add-modify/add-modify.component';
 import { ReservationRoutingModule } from './/reservation-routing.module';
 import { ReservationComponent } from './reservation.component';
+import { SharedModule } from '../../shared/modules/shared/shared.module';
 
 @NgModule({
   imports: [
-    CommonModule,
+    SharedModule,
     ReservationRoutingModule
   ],
   declarations: [AddModifyComponent, ReservationComponent]
