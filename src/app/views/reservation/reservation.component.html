@@ -1,21 +1,38 @@
-<div class="container mt-3">
+<div class="container m-top-full">
   <div class="card">
-      <div class="card-header d-flex">
-        <h1 class="h4">Browse Reservations</h1>
-        <button class="btn btn-secondary btn-sm ml-auto">Add Reservation</button>
-      </div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-4">
-          <h3 class="h5">Cars</h3>
+    <div class="card-header d-flex">
+      <h1 class="m-none font-md align-center">Browse Reservations</h1>
+      <button class="btn btn-secondary btn-sm m-l-auto">Add Reservation</button>
+    </div>
+    <div class="calendar d-flex">
+      <ul class="list">
+        <li class="list-header">
+          <h3 class="m-none font-md">Cars</h3>
+        </li>
+        <li class="list-item" *ngFor="let item of reservations;">
+          <span class="d-block">{{item.carData.carType}}</span>
+          <span class="font-sm">{{item.carData.plateNumber}}</span>
+        </li>
+        <li class="list-footer"></li>
+      </ul>
+      <div class="table d-flex f-column">
+        <div class="table-header bg-white">
+          <span class="d-block month">{{minDate.toLocaleString('en', {month: 'long'})}} {{minDate.getFullYear()}}</span>
+          <div class="nav-item">
+              <span class="d-block next"></span>
+              <span class="d-block prev"></span>
+          </div>
         </div>
-        <div class="col-8">
-
-            <angular2-fullcalendar [options]="calendarOptions" (initialized)="onCalendarInit($event)"></angular2-fullcalendar>
-            
-        </div>
-        <div class="col-12 mt-5">
-          {{reservations | json}}
+        <div class="table-body clearfix d-flex f-justify-between">
+          <span class="column bg-silver"></span>
+          <div class="res-container">
+            <div class="d-flex f-column">
+              <div class="dates d-flex">
+                <span *ngFor="let date of allDates;">{{date.getDate()}}</span>
+              </div>
+            </div>
+          </div>
+          <span class="column m-l-auto bg-white"></span>
         </div>
       </div>
     </div>

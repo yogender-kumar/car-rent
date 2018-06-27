@@ -1,25 +1,30 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import {CalendarComponent} from "ap-angular-fullcalendar";
-
 @Component({
   selector: 'app-reservation',
   templateUrl: './reservation.component.html',
-  styleUrls: ['./reservation.component.css']
+  styleUrls: ['./reservation.component.scss']
 })
 export class ReservationComponent implements OnInit, OnDestroy {
-  
-  @ViewChild(CalendarComponent) myCalendar: CalendarComponent;
 
   reservations:Array<object>;
   cars: Array<object>;
+  maxDate: object;
+  minDate: object;
+  allDates: Array<object>;
   
   constructor(
     private route: ActivatedRoute
   ) {
+    let sortedByFromDate = this.sortByDate(this.route.snapshot.data['reservations']);
     this.cars = this.route.snapshot.data['cars'];
-    this.reservations = this.groupReservationByCarId(this.route.snapshot.data['reservations']);
+    this.reservations = this.groupReservationByCarId(sortedByFromDate);
+
+    let sortedByToDate = this.sortByDate([].concat(sortedByFromDate), true);
+    this.minDate = new Date(sortedByFromDate[0]['from']);
+    this.maxDate = new Date(sortedByToDate[sortedByToDate.length -1]['to']);
+    this.allDates = this.getDatesBetweenMinAndMax(this.minDate, this.maxDate);
   }
   
   ngOnDestroy() {}
@@ -46,7 +51,7 @@ export class ReservationComponent implements OnInit, OnDestroy {
         {
           carId: carId,
           carData: this.getCarByCarId(carId),
-          data: this.sortByDate(groups[carId])
+          data: groups[carId]
         }
       )
     );
@@ -56,12 +61,13 @@ export class ReservationComponent implements OnInit, OnDestroy {
   /**
    * This method sort reservations based on `from` date
    * @param data contains list of reservations
+   * @param isSortedByToDate if true then sort the list by `to` date node value
    * @returns the list, sorted by `from`
    */
-  private sortByDate(data): Array<object>{
+  private sortByDate(data, isSortedByToDate?: boolean): Array<object>{
     return data.sort( (item1, item2) => {
-      let date1 = Date.parse(item1.from);
-      let date2 = Date.parse(item2.from);
+      let date1 = isSortedByToDate ? Date.parse(item1.to) : Date.parse(item1.from);
+      let date2 = isSortedByToDate ? Date.parse(item2.to) : Date.parse(item2.from);
       if( date1 < date2 ){
         return -1;
       }else if( date1 > date2 ){
@@ -80,42 +86,21 @@ export class ReservationComponent implements OnInit, OnDestroy {
     return this.cars.find( car => car['id'] == id);
   }
 
-
   /**
-   * 'fullcalendar' code lies below this comment, which require some changes to make it working as expected
-   * Needs to map data which is getting from API to render it on browser
+   * This method returns all dates between Start and End Date
+   * @param start date object
+   * @param end date object
+   * @returns list of date objects from Start and End date
    */
+  private getDatesBetweenMinAndMax(start, end) {
+    let startDate = new Date(start.toString());
+    let dateArray = [];
 
-  calendarOptions:Object = {
-    height: 'parent',
-    fixedWeekCount : false,
-    defaultDate: new Date(),
-    editable: true,
-    eventLimit: true, // allow "more" link when too many events
-    events: [
-      {
-        title: 'All Day Event',
-        start: '2016-09-01'
-      },
-      {
-        title: 'Long Event',
-        start: '2016-09-07',
-        end: '2016-09-10'
-      },
-      {
-        id: 999,
-        title: 'Repeating Event',
-        start: '2016-09-09T16:00:00'
-      }
-    ]
-  };
-
-  onCalendarInit(initialized: boolean) {
-    console.log('Calendar initialized');
-  }
-
-  changeCalendarView(view) {
-    this.myCalendar.fullCalendar('changeView', view);
+    while(startDate < end){
+      dateArray.push( new Date(startDate));
+      startDate.setDate(startDate.getDate() + 1);
+    }
+    return dateArray;
   }
   
 }
