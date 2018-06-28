@@ -15,7 +15,8 @@ export class ReservationResolver implements Resolve<Array<any>> {
   ) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-    return this.reservationService.getReservations();
+    let resId = route.paramMap.get('id');
+    return this.reservationService.getReservations(resId);
   }
 }
 

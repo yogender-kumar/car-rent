@@ -20,7 +20,10 @@ const routes: Routes = [{
     component: AddModifyComponent
   },{
     path: ROUTES.RESERVATION.CHILD.EDIT,
-    component: AddModifyComponent
+    component: AddModifyComponent,
+    resolve: {
+      reservation: ReservationResolver
+    }
   }];
 
 @NgModule({

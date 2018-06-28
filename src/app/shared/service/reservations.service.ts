@@ -13,7 +13,8 @@ export class ReservationsService {
     private http: HttpClient
   ) { }
 
-  getReservations(): Observable<any> {
-    return this.http.get(API.HOST+API.BASE+API.RESERVATION);
+  getReservations(resId?: string): Observable<any> {
+    let api = API.HOST + API.BASE + API.RESERVATION + (resId ? '/' + resId : '');
+    return this.http.get(api);
   }
 }

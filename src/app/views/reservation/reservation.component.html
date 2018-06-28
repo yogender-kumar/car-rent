@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-header d-flex">
       <h1 class="m-none font-md align-center">Browse Reservations</h1>
-      <button class="btn btn-secondary btn-sm m-l-auto">Add Reservation</button>
+      <a class="btn btn-secondary btn-sm m-l-auto" routerLink="/reservation/add">Add Reservation</a>
     </div>
     <div class="calendar d-flex">
       <ul class="list left">
@@ -33,7 +33,7 @@
               </li>
               <li class="list-item" *ngFor="let item of reservations;">
                 <div *ngFor="let res of item.data;" class="reservation-block" [attr.style]="allDates[0] | calcWidth: res.from : res.to">
-                  <a routerLink="/reservations/{{res.id}}" class="font-sm" [attr.data-from]="res.from" [attr.data-to]="res.to">{{res.clientName}}</a>
+                  <a routerLink="/reservation/{{res.id}}" class="font-sm" [attr.data-from]="res.from" [attr.data-to]="res.to">{{res.clientName}}</a>
                 </div>
               </li>
               <li class="list-footer"></li>
