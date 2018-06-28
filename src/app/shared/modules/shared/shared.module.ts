@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule }   from '@angular/forms';
 import { Directive } from '../../directives';
 import { Pipes } from '../../pipes';
 
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     ...Directive,
@@ -14,6 +17,8 @@ import { Pipes } from '../../pipes';
   ],
   exports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     ...Directive,
     ...Pipes
   ]

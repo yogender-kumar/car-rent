@@ -1,3 +1,41 @@
-<p>
-  add-modify works!
-</p>
+<div class="container m-top-full">
+  <div class="card">
+    <div class="card-block">
+      <h1 class="m-none font-md align-center">{{carId ? "Edit" : "Add"}} reservation</h1>
+      <form [formGroup]="resForm" class="m-top-full">
+        <div class="form-group">
+          <label class="center-block d-flex">
+              <strong class="font-sm">Cars:</strong>
+            <select class="form-control" formControlName="carId">
+              <option *ngFor="let car of cars" [value]="car.id">{{car.carType}}</option>
+            </select>
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="center-block d-flex">
+            <strong class="font-sm">From:</strong>
+            <input type="date" class="form-control" formControlName="from" min="2018-06-01" max="2018-12-31" />
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="center-block d-flex">
+            <strong class="font-sm">To:</strong>
+            <input type="date" class="form-control" formControlName="to" min="2018-06-01" max="2018-12-31" />
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="center-block d-flex">
+            <strong class="font-sm">Client Name:</strong>
+            <input class="form-control" formControlName="clientName">
+          </label>
+        </div>
+
+        <div class="form-group action-block">
+          <button class="btn" (click)="deleteReservation();" *ngIf="carId">Delete</button>
+          <button class="btn btn-primary" (click)="submitForm();">{{carId ? "Save" : "Add"}}</button>
+          <a class="btn btn-secondary" routerLink="/reservation">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

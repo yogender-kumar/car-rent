@@ -1,0 +1,28 @@
+@import '../../../../assets/scss/variables';
+.container{
+    max-width: 36rem;
+}
+
+.form-group{
+    margin: 0 0 1rem;
+    .center-block{
+        strong{
+            min-width: 150px;
+            text-align:right;
+            padding: 0 1rem 0 0;
+        }
+    }
+    .form-control{
+        width: 100%;
+        float:right;
+        border: 1px solid $shark;
+        padding: 0.25rem 1rem;
+    }
+}
+
+.action-block{
+    text-align: right;
+    .btn{
+        margin-left: 1rem;
+    }
+}
