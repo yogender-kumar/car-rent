@@ -1,8 +1,7 @@
-import * as $ from 'jquery'; // For Angular 6
-
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Directive } from '../../directives';
+import { Pipes } from '../../pipes';
 
 
 @NgModule({
@@ -10,11 +9,13 @@ import { Directive } from '../../directives';
     CommonModule
   ],
   declarations: [
-    ...Directive
+    ...Directive,
+    ...Pipes
   ],
   exports: [
     CommonModule,
-    ...Directive
+    ...Directive,
+    ...Pipes
   ]
 })
 export class SharedModule { }

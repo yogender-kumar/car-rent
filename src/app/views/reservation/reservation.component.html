@@ -5,7 +5,7 @@
       <button class="btn btn-secondary btn-sm m-l-auto">Add Reservation</button>
     </div>
     <div class="calendar d-flex">
-      <ul class="list">
+      <ul class="list left">
         <li class="list-header">
           <h3 class="m-none font-md">Cars</h3>
         </li>
@@ -30,6 +30,12 @@
               <div class="dates d-flex">
                 <span *ngFor="let date of allDates;">{{date.getDate()}}</span>
               </div>
+              <ul class="list">
+                  <li class="list-item" *ngFor="let item of reservations;">
+                    <a routerLink="/reservations/{{res.id}}" *ngFor="let res of item.data;" [attr.data-from]="res.from" [attr.data-to]="res.to" [attr.style]="allDates[0] | calcWidth: res.from : res.to">{{res.clientName}}</a>
+                  </li>
+                  <li class="list-footer"></li>
+                </ul>
             </div>
           </div>
           <span class="column m-l-auto bg-white"></span>
