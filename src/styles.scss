@@ -2,7 +2,7 @@
 :root {
     --module-size: 100px;
     --data-endday:5; /* Default value */
-  }
+}
 html, body {
     font-family: sans-serif;
     font-size: 16px;
@@ -36,14 +36,22 @@ ul{
 
 .container{
     position: relative;
-    margin: 0 auto;
+    margin: 2rem auto;
     padding: 0 1rem;
     max-width: 64rem;
+}
+.b-{
+    &top{
+        border-top: 0.0625rem solid $shark;
+    }
 }
 
 .bg-{
     &white{
         background-color: $white;
+    }
+    &white-50{
+        background-color: $white50;
     }
     &silver{
         background-color: $silver;
@@ -195,24 +203,20 @@ ul{
         &.left{
             width: 20%;
         }
-        &-header, &-footer{
+        &-header{
             padding: 2rem 1rem;
             text-align: center;
         }
         &-footer{
-            border-top:0.0625rem solid $shark;
+            height: 3.375rem;
         }
         &-item{
-            border-top: 0.0625rem solid $shark;
             padding: 0.5rem 1rem;
-            min-height: 2.25rem;
+            height: 3.375rem;
             position: relative;
-            & > a{
-                position:absolute;
-                display:inline-block;
-            }
+            box-sizing: border-box;
         }
-        &-item:nth-of-type(2n+0){
+        .striped:nth-of-type(2n+0){
             background: $silver;
         }
     }
@@ -244,6 +248,16 @@ ul{
             transparent calc(100% * 1/14),
             transparent calc(100% * 1/7)
             );
+            .grid {
+                width: 100%;
+                background-image: repeating-linear-gradient(
+                0deg,
+                $shark,
+                $shark 0.0625rem,
+                transparent 0.0625rem,
+                transparent 3.375rem
+                );
+            }
         }
         .column{
             width: calc(100% * 1/14);
@@ -260,7 +274,7 @@ ul{
             left: 1rem;
             cursor: pointer;
         }
-        .prev{
+        .next{
             border-left: 1rem solid $black;
             border-right: none;
             left: auto;
@@ -269,14 +283,35 @@ ul{
     }
     .res-container{
         width: calc(100% * 12/14);
-        overflow:hidden;
+        overflow-x:hidden;
         position: relative;
+        -ms-overflow-style: none;
+        overflow: -moz-scrollbars-none;
+        &::-webkit-scrollbar{
+            display: none;
+        }
         .dates{
+            height: 3.375rem;
+            box-sizing: border-box;
+            white-space: nowrap;
             &>span{
                 min-width: calc(100% * 1/12);
                 text-align: center;
                 padding: 1rem 0;
             }
+        }
+    }
+    .reservation-block{
+        position:absolute;
+        display:inline-block;
+        padding: 0.5rem;
+        box-sizing: border-box;
+        > a{
+            background: $viking;
+            color: $shark;
+            display:block;
+            padding:0.25rem;
+            text-decoration: none;
         }
     }
 }

@@ -15,8 +15,8 @@ export class CalcWidthPipe implements PipeTransform {
   transform(value: any, fromDate?: any, toDate?: any): any {
 
     let fromDiff = (new Date(fromDate).getTime() - value.getTime()) / (1000 * 3600 * 24);
-    let toDiff = (new Date(toDate).getTime() - value.getTime()) / (1000 * 3600 * 24);
-    let style = "width: calc(100%*1/12*"+ toDiff + ");left: "+ grid * fromDiff + "%;";
+    let toDiff = (new Date(toDate).getTime() - new Date(fromDate).getTime()) / (1000 * 3600 * 24) + 1;
+    let style = "width: "+grid* toDiff + "%;left: "+ grid * fromDiff + "%;";
 
     return this._sanitizer.bypassSecurityTrustStyle(style.toString());
   }

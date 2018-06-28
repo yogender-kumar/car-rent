@@ -9,36 +9,38 @@
         <li class="list-header">
           <h3 class="m-none font-md">Cars</h3>
         </li>
-        <li class="list-item" *ngFor="let item of reservations;">
+        <li class="list-item b-top striped" *ngFor="let item of reservations;">
           <span class="d-block">{{item.carData.carType}}</span>
           <span class="font-sm">{{item.carData.plateNumber}}</span>
         </li>
-        <li class="list-footer"></li>
+        <li class="list-footer b-top"></li>
       </ul>
       <div class="table d-flex f-column">
         <div class="table-header bg-white">
           <span class="d-block month">{{minDate.toLocaleString('en', {month: 'long'})}} {{minDate.getFullYear()}}</span>
           <div class="nav-item">
-              <span class="d-block next"></span>
-              <span class="d-block prev"></span>
+            <span class="d-block prev" (click)="slideCalendar($event)"></span>
+            <span class="d-block next" (click)="slideCalendar($event, true)"></span>
           </div>
         </div>
-        <div class="table-body clearfix d-flex f-justify-between">
+        <div class="table-body clearfix">
+          <div class="grid d-flex f-justify-between">
           <span class="column bg-silver"></span>
-          <div class="res-container">
-            <div class="d-flex f-column">
-              <div class="dates d-flex">
-                <span *ngFor="let date of allDates;">{{date.getDate()}}</span>
-              </div>
-              <ul class="list">
-                  <li class="list-item" *ngFor="let item of reservations;">
-                    <a routerLink="/reservations/{{res.id}}" *ngFor="let res of item.data;" [attr.data-from]="res.from" [attr.data-to]="res.to" [attr.style]="allDates[0] | calcWidth: res.from : res.to">{{res.clientName}}</a>
-                  </li>
-                  <li class="list-footer"></li>
-                </ul>
-            </div>
+          <div class="res-container" #slider>
+            <ul class="list">
+              <li class="dates ">
+                <span class="d-inline-block" *ngFor="let date of allDates;">{{date.getDate()}}</span>
+              </li>
+              <li class="list-item" *ngFor="let item of reservations;">
+                <div *ngFor="let res of item.data;" class="reservation-block" [attr.style]="allDates[0] | calcWidth: res.from : res.to">
+                  <a routerLink="/reservations/{{res.id}}" class="font-sm" [attr.data-from]="res.from" [attr.data-to]="res.to">{{res.clientName}}</a>
+                </div>
+              </li>
+              <li class="list-footer"></li>
+            </ul>
           </div>
-          <span class="column m-l-auto bg-white"></span>
+          <span class="column m-l-auto bg-white-50"></span>
+          </div>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ReservationComponent implements OnInit, OnDestroy {
 
+  @ViewChild('slider') $sliderContainer: ElementRef;
   reservations:Array<object>;
   cars: Array<object>;
   maxDate: object;
@@ -96,11 +97,25 @@ export class ReservationComponent implements OnInit, OnDestroy {
     let startDate = new Date(start.toString());
     let dateArray = [];
 
-    while(startDate < end){
+    while(startDate <= end){
       dateArray.push( new Date(startDate));
       startDate.setDate(startDate.getDate() + 1);
     }
     return dateArray;
+  }
+
+  public slideCalendar(event, isNext?: boolean): void{
+    let offsetLeft = this.$sliderContainer.nativeElement.scrollLeft;
+    let scrollWidth = this.$sliderContainer.nativeElement.scrollWidth;
+    let offsetWidth = this.$sliderContainer.nativeElement.offsetWidth;
+    let toMove = offsetWidth/12;
+    let canScroll = offsetLeft + offsetWidth;
+    if(isNext && canScroll < scrollWidth){
+      this.$sliderContainer.nativeElement.scrollLeft += toMove;
+    }
+    if(!isNext && offsetLeft > 0){
+      this.$sliderContainer.nativeElement.scrollLeft -= toMove;
+    }
   }
   
 }
